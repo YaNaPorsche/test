@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #FFC0CB;
+    border-radius: 5px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #FFC0CB;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+button[type="submit"] {
+    background-color: #FFC0CB;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#messagesContainer {
+    border: 1px solid #FFC0CB;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.message {
+    width: auto;
+    padding: 10px;
+    border: 1px solid #FFC0CB;
+    margin: 10px 0;
+    overflow-wrap: break-word; 
+    word-wrap: break-word; 
+    background-color: #f9f9f9;
+}
+
+.message:hover {
+    background-color: #FFC0CB;
+}
+
+.message strong {
+    color: #333;
+}
+
+.message p {
+    margin: 5px 0;
+    color: #555;
+}
+.feedback{
+    position: fixed;}
+    

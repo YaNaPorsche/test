@@ -38,15 +38,13 @@ class Feedback {
             return "Заполните ВСЕ поля!";
         }
 
-        // Регулярное выражение для проверки ФИО
-        $namePattern = "/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+){2}$/u"; // Проверка на ФИО
+       
+        $namePattern = "/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+){2}$/u"; 
 
-        // Проверка имени
         if (!preg_match($namePattern, $name)) {
             return "Неверный формат ФИО.";
         }
 
-        // Проверка email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return "Неверный формат email.";
         }
@@ -78,8 +76,6 @@ class Feedback {
         $this->conn = null; 
     }
 }
-
-// Создание экземпляра класса и обработка запроса
 $feedback = new Feedback('localhost', 'db_test', 'root', 'Milana0909!');
 $feedback->handleRequest();
 ?>

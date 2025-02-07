@@ -34,7 +34,6 @@ class MessageFetcher {
     }
 }
 
-// Создание экземпляра класса и получение сообщений
 $messageFetcher = new MessageFetcher('localhost', 'db_test', 'root', 'Milana0909!');
 $messageFetcher->fetchMessages();
 ?>

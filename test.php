@@ -33,21 +33,7 @@
 </div>
 
 <!-- <style>
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-    }
-    .form-group {
-        flex: 1;
-        margin-right: 10px; /* Отступ между полями */
-    }
-    .form-group:last-child {
-        margin-right: 0; /* Убираем отступ у последнего элемента */
-    }
-    label {
-        display: block; /* Чтобы метки были над полями ввода */
-        margin-bottom: 5px;
-    }
+    
 </style> -->
 
     <script>

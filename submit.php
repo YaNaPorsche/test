@@ -1,60 +1,85 @@
 <?php
 session_start();
-$host = 'localhost'; 
-$db = 'db_test'; 
-$user = 'root'; 
-$pass = 'Milana0909!'; 
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die(json_encode(['success' => false, 'message' => "Ошибка подключения: " . $e->getMessage()]));
-}
+class Feedback {
+    private $conn;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $message = trim($_POST['message']);
-
-    if (empty($name) || empty($email) || empty($message)) {
-        echo json_encode(['success' => false, 'message' => "Заполните ВСЕ поля!"]);
-        exit();
+    public function __construct($host, $db, $user, $pass) {
+        $this->connect($host, $db, $user, $pass);
     }
 
-    // Регулярное выражение для проверки ФИО
-    $namePattern = "/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+){2}$/u"; // Проверка на ФИО
-
-    // Проверка имени
-    if (!preg_match($namePattern, $name)) {
-        echo json_encode(['success' => false, 'message' => "Неверный формат ФИО."]);
-        exit();
+    private function connect($host, $db, $user, $pass) {
+        try {
+            $this->conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die(json_encode(['success' => false, 'message' => "Ошибка подключения: " . $e->getMessage()]));
+        }
     }
 
-    // Проверка email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['success' => false, 'message' => "Неверный формат email."]);
-        exit();
+    public function handleRequest() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $name = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $message = trim($_POST['message']);
+
+            $validationResult = $this->validate($name, $email, $message);
+            if ($validationResult !== true) {
+                echo json_encode(['success' => false, 'message' => $validationResult]);
+                exit();
+            }
+
+            $this->sendMessage($name, $email, $message);
+        }
     }
 
-    try {
-        $send = $conn->prepare("INSERT INTO `message`(`name`, `email`, `message`) VALUES (:name, :email, :message)");
-        $send->bindParam(':name', $name);
-        $send->bindParam(':email', $email);
-        $send->bindParam(':message', $message); 
+    private function validate($name, $email, $message) {
+        if (empty($name) || empty($email) || empty($message)) {
+            return "Заполните ВСЕ поля!";
+        }
 
-        if ($send->execute()) {
-            echo json_encode(['success' => true, 'message' => ""]);
-            exit();
- } else {
-            echo json_encode(['success' => false, 'message' => "Ошибка отправления сообщения."]);
+        // Регулярное выражение для проверки ФИО
+        $namePattern = "/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+){2}$/u"; // Проверка на ФИО
+
+        // Проверка имени
+        if (!preg_match($namePattern, $name)) {
+            return "Неверный формат ФИО.";
+        }
+
+        // Проверка email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "Неверный формат email.";
+        }
+
+        return true;
+    }
+
+    private function sendMessage($name, $email, $message) {
+        try {
+            $send = $this->conn->prepare("INSERT INTO `message`(`name`, `email`, `message`) VALUES (:name, :email, :message)");
+            $send->bindParam(':name', $name);
+            $send->bindParam(':email', $email);
+            $send->bindParam(':message', $message);
+
+            if ($send->execute()) {
+                echo json_encode(['success' => true, 'message' => ""]);
+                exit();
+            } else {
+                echo json_encode(['success' => false, 'message' => "Ошибка отправления сообщения."]);
+                exit();
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => "Ошибка отправления сообщения: " . $e->getMessage()]);
             exit();
         }
-    } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => "Ошибка отправления сообщения: " . $e->getMessage()]);
-        exit();
+    }
+
+    public function __destruct() {
+        $this->conn = null; 
     }
 }
 
-$conn = null; 
+// Создание экземпляра класса и обработка запроса
+$feedback = new Feedback('localhost', 'db_test', 'root', 'Milana0909!');
+$feedback->handleRequest();
 ?>

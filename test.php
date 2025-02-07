@@ -30,28 +30,9 @@
 
         <button type="submit">Send Message</button>
     </form>
-</div><div class="container">
-    <h2>Feedback</h2>
-    <form id="feedbackForm">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" placeholder="Имя Фамилия Отчество" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-            </div>
-        </div>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
 </div>
 
-<style>
+<!-- <style>
     .form-row {
         display: flex;
         justify-content: space-between;
@@ -67,25 +48,7 @@
         display: block; /* Чтобы метки были над полями ввода */
         margin-bottom: 5px;
     }
-</style>
-
-<style>
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-    }
-    .form-group {
-        flex: 1;
-        margin-right: 10px; /* Отступ между полями */
-    }
-    .form-group:last-child {
-        margin-right: 0; /* Убираем отступ у последнего элемента */
-    }
-    label {
-        display: block; /* Чтобы метки были над полями ввода */
-        margin-bottom: 5px;
-    }
-</style>
+</style> -->
 
     <script>
         document.getElementById('feedbackForm').addEventListener('submit', function (event) {

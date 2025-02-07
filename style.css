@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
 }
 .container {
-    width: 500px;
+    width: px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #FFC0CB;
@@ -64,4 +64,22 @@ button[type="submit"] {
 }
 .feedback{
     position: fixed;}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+ .form-group {
+    flex: 1;
+    margin-right: 10px; 
+}
+.form-group:last-child {
+    margin-right: 0; 
     
+}
+label {
+    display: block; 
+    margin-bottom: 5px;
+}    
+    
+

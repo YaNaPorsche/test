@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    
+        <div></div>
         <div id="responseMessage"></div>
         <div id="messagesContainer"></div> 
         <div class="container">
